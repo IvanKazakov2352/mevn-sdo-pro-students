@@ -1,0 +1,24 @@
+.justify {
+  display: flex;
+  justify-content: flex-start;
+}
+h3 {
+  margin-top: 20px;
+  max-height: 23px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.sheet {
+  max-width: 1400px;
+  min-height: 1000px;
+  max-height: 6000px;
+  background-color: white;
+  border-radius: 10px;
+  text-indent: 1.5em;
+  box-sizing: border-box;
+  padding: 20px;
+}
