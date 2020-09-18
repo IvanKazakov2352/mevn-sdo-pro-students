@@ -18,7 +18,8 @@ h3 {
   max-height: 6000px;
   background-color: white;
   border-radius: 10px;
-  text-indent: 1.5em;
-  box-sizing: border-box;
-  padding: 20px;
+}
+.sheet-layout {
+  display: flex;
+  justify-content: center;
 }

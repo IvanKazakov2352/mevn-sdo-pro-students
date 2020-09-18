@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import {mapGetters} from "vuex"
+import { mapGetters } from "vuex";
 
 Vue.use(VueRouter);
 
@@ -32,7 +32,47 @@ const routes = [
   {
     path: "/profiles",
     name: "courses",
-    component: () => import("@/components/Courses.vue"),
+    component: () => import("@/components/Profiles.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/:id",
+    name: "profileItem",
+    component: () => import("@/components/ProfileItem.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/:id/category/:categoryID",
+    name: "categoryItem",
+    component: () => import("@/components/CategoryItem.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/:id/category/:categoryID/subcategory/:subcategoryID",
+    name: "subcategoryItem",
+    component: () => import("@/components/SubCategoryItem.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/:id/category/:categoryID/subcategory/:subcategoryID/module/:moduleID",
+    name: "moduleItem",
+    component: () => import("@/components/ModuleItem.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/:id/category/:categoryID/subcategory/:subcategoryID/module/:moduleID/lection/:lectionID",
+    name: "lectionItem",
+    component: () => import("@/components/LectionItem.vue"),
     meta: {
       requiresAuth: true,
     },

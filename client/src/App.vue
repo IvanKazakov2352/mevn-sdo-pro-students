@@ -79,7 +79,7 @@ export default {
         return [{ icon: "mdi-login", text: "Войти", route: "/signin" }];
       } else {
         return [
-          { icon: "mdi-book", text: "Курсы", route: "/profiles" },
+          { icon: "mdi-book", text: "Профили обучения", route: "/profiles" },
           {
             icon: "mdi-calendar",
             text: "Календарь событий",
