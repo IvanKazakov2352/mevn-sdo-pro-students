@@ -37,17 +37,31 @@
             >
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                  >
+                  <v-btn icon v-bind="attrs" v-on="on">
                     <v-icon>
                       mdi-polaroid
                     </v-icon>
                   </v-btn>
                 </template>
                 <span>Читать лекцию</span>
+              </v-tooltip>
+            </router-link>
+            <router-link
+              tag="button"
+              :to="{
+                name: 'lectionTest',
+                params: { lectionID: lection.id },
+              }"
+            >
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon>
+                      mdi-alpha-t-box-outline
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Список тестирований к данной лекции</span>
               </v-tooltip>
             </router-link>
           </v-card-actions>

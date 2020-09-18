@@ -2,14 +2,14 @@
   <v-row class="fill-height">
     <v-col>
       <v-toolbar class="mb-2" color="indigo darken-5" dark flat>
-        <v-toolbar-title>Тест по {{ testOBJ.nametest }}</v-toolbar-title>
+        <v-toolbar-title>{{ testing.nameTest }}</v-toolbar-title>
       </v-toolbar>
       <v-card class="fill-height" height="auto">
         <v-col cols="12">
           <v-card
             class="mx-auto mb-2"
             max-width="700"
-            v-for="question in testOBJ.questions.slice(
+            v-for="question in testing.questions.slice(
               (page - 1) * perPage,
               page * perPage
             )"
@@ -79,22 +79,8 @@
 <script>
 import axios from "axios";
 export default {
-  props: {
-    testID: {
-      type: String,
-      default: "",
-      required: true,
-    },
-    group: {
-      type: Object,
-      default: {},
-      required: true,
-    },
-    testOBJ: {
-      type: Object,
-      default: {},
-      required: true,
-    },
+  metaInfo: {
+    title: "Тестирование | СДО PRO",
   },
   data() {
     return {
@@ -111,37 +97,40 @@ export default {
   methods: {
     next(change, question) {
       this.page = Math.max(1, Math.min(this.numPages, this.page + change));
-      this.questions = this.testOBJ.questions;
-      this.questions.forEach((ques) => {
+      this.testing.questions.forEach((ques) => {
         if (this.checkedQuestions === ques.answer) {
           this.plus++;
         }
       });
-      this.testPercent = (this.plus / this.questions.length) * 100;
+      this.testPercent = (this.plus / this.testing.questions.length) * 100;
       const questionAssign = Object.assign(question, {
         otvet: this.checkedQuestions,
       });
       this.finalOtvets.push(questionAssign);
     },
     test(question) {
-      confirm(
-        "Если вы закончите тест, то автоматически окажитесь на странице результатов"
-      ) &&
-        this.next(+1, question) &&
-        this.$router.push({
-          name: "testResult",
-          params: {
-            percent: this.testPercent,
-            testQues: this.questions,
-            nameTest: this.testOBJ.nametest,
-            group: this.group,
-          },
-        });
+      this.next(+1, question);
+      this.$store.commit("setResult", {
+        id: this.$uuid.v4(),
+        percent: this.testPercent,
+        testQues: this.testing.questions,
+        nameTest: this.testing.nameTest,
+      });
+      this.$router.push("/result");
     },
   },
   computed: {
     numPages() {
-      return Math.ceil(this.testOBJ.questions.length / this.perPage);
+      return Math.ceil(this.testing.questions.length / this.perPage);
+    },
+    testing() {
+      return this.$store.getters.test(
+        this.$route.params.categoryID,
+        this.$route.params.subcategoryID,
+        this.$route.params.moduleID,
+        this.$route.params.lectionID,
+        this.$route.params.testID
+      );
     },
   },
 };

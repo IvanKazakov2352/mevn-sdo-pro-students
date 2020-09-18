@@ -91,11 +91,6 @@ export default {
             text: "Контакты",
             route: "/contacts",
           },
-          {
-            icon: "mdi-dresser",
-            text: "Результаты моих тестов",
-            route: "/result",
-          },
         ];
       }
     },

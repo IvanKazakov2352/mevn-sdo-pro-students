@@ -4,6 +4,7 @@ export default {
   state: {
     groups: [],
     profile: {},
+    result: {}
   },
   mutations: {
     setGroups(state, data) {
@@ -12,6 +13,9 @@ export default {
     setProfile(state, data) {
       state.profile = data
     },
+    setResult(state, payload) {
+      state.result = payload
+    }
   },
   actions: {
     async fetchGroups({ commit }) {
@@ -33,6 +37,9 @@ export default {
     profile(state) {
       return state.profile
     },
+    result(state) {
+      return state.result
+    },
     category: (state) => (categoryID) => {
       return state.profile.categories.find(cat => cat.id === categoryID)
     },
@@ -50,6 +57,13 @@ export default {
       const subCategory = category.subCategories.find(subcats => subcats.id === subcategoryID)
       const module = subCategory.modules.find(modul => modul.id === moduleID)
       return module.lections.find(lection => lection.id === lectionID)
+    },
+    test: (state) => (categoryID, subcategoryID, moduleID, lectionID, testID) => {
+      const category = state.profile.categories.find(cat => cat.id === categoryID)
+      const subCategory = category.subCategories.find(subcats => subcats.id === subcategoryID)
+      const module = subCategory.modules.find(modul => modul.id === moduleID)
+      const lection = module.lections.find(lection => lection.id === lectionID)
+      return lection.tests.find(test => test.id === testID)
     }
   },
 };

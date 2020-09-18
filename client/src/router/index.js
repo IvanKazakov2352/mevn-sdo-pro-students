@@ -78,6 +78,30 @@ const routes = [
     },
   },
   {
+    path: "/profile/:id/category/:categoryID/subcategory/:subcategoryID/module/:moduleID/lectiontests/:lectionID",
+    name: "lectionTest",
+    component: () => import("@/components/LectionTests.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/:id/category/:categoryID/subcategory/:subcategoryID/module/:moduleID/lectiontests/:lectionID/test/:testID",
+    name: "lectionTestItem",
+    component: () => import("@/components/Tests.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/result",
+    name: "result",
+    component: () => import("@/components/TestResult.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/signin",
     name: "signin",
     component: () => import("@/components/Login.vue"),
