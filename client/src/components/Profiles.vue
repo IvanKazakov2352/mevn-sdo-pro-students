@@ -61,6 +61,7 @@ export default {
   },
   mounted() {
     this.listener = JSON.parse(localStorage.getItem("listenerProfile"))
+    this.$store.dispatch("fetchGroups")
   },
 };
 </script>
