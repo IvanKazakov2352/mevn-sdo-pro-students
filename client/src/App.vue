@@ -39,10 +39,10 @@
         <span class="hidden-sm-and-down">СДО PRO Студенты</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-if="this.exit && this.isAuthenticated" text>
-        <span class="hidden-sm-and-down">{{ isUser.fiolistener }}</span>
+      <v-btn v-if="this.exit" text>
+        <span class="hidden-sm-and-down">{{ listener.fiolistener }}</span>
       </v-btn>
-      <v-btn v-if="this.exit && this.isAuthenticated" icon @click="logout">
+      <v-btn v-if="this.exit" icon @click="logout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
@@ -68,14 +68,13 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("listenerProfile");
-      this.$router.push({ path: "signin", query: { message: "logout" } });
+      this.$router.push("/signin");
       location.reload()
     },
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "isUser"]),
     menu() {
-      if (!this.exit && !this.isAuthenticated) {
+      if (!this.exit) {
         return [{ icon: "mdi-login", text: "Войти", route: "/signin" }];
       } else {
         return [
@@ -96,7 +95,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getListeners");
-  },
+    this.listener = JSON.parse(localStorage.getItem("listenerProfile"))
+  }
 };
 </script>

@@ -32,7 +32,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" :disabled="!valid" @click="loginListener"
+          <v-btn color="primary" :disabled="!valid" @click="loginListeners"
             >Войти</v-btn
           >
         </v-card-actions>
@@ -44,7 +44,6 @@
 <script>
 import axios from "axios";
 import sweetalert from "sweetalert";
-import { mapGetters } from "vuex";
 export default {
   data: () => ({
     login: null,
@@ -52,6 +51,8 @@ export default {
     errorAlert: false,
     show1: false,
     valid: false,
+    listeners: [],
+    user: {},
     loginRules: [
       (v) => !!v || "Введите Логин",
       (v) => (v && v.length == 7) || "Логин должен состоять из 7 символов",
@@ -62,21 +63,26 @@ export default {
     ],
   }),
   methods: {
-    loginListener() {
-      this.$store.dispatch("findListener", {
-        login: this.login,
-        password: this.password,
+    loginListeners() {
+      const listener = this.listeners.find((listener) => {
+        if (listener.login === this.login && listener.password === this.password) {
+          return listener;
+        }
       });
-      this.$store.commit("setAuthhenticated");
-      if (this.isAuthenticated) {
-        this.$router.push("/profiles");
+      if (typeof listener === "undefined") {
+        this.errorAlert = true;
       } else {
-        this.errorAlert = true
+        localStorage.setItem("listenerProfile", JSON.stringify(listener));
+        this.$router.push("/profiles");
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       }
     },
   },
-  computed: {
-    ...mapGetters(["isAuthenticated"]),
+  async mounted() {
+    const res = await axios.get("/api/listeners");
+    this.listeners = res.data;
   },
 };
 </script>

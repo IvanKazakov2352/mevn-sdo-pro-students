@@ -46,19 +46,21 @@ export default {
   metaInfo: {
     title: "Профили обучения | СДО PRO",
   },
-  data: () => ({}),
+  data: () => ({
+    listener: {}
+  }),
   computed: {
-    ...mapGetters(["groups", "isUser"]),
+    ...mapGetters(["groups"]),
     userGroups() {
       return this.groups.filter((group) => {
-        if (group.user.find((u) => u._id === this.isUser._id)) {
+        if (group.user.find((u) => u._id === this.listener._id)) {
           return [group];
         }
       });
     },
   },
   mounted() {
-    this.$store.dispatch("fetchGroups");
+    this.listener = JSON.parse(localStorage.getItem("listenerProfile"))
   },
 };
 </script>
