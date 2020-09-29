@@ -6,6 +6,7 @@
       </v-toolbar>
       <v-col cols="12">
         <v-container>
+          <v-btn class="ma-2" outlined color="indigo" @click="printLection">Распечатать лекцию</v-btn>
           <v-row justify="center">
             <v-col cols="12">
               <v-sheet
@@ -29,6 +30,11 @@ import "quill/dist/quill.snow.css";
 export default {
   metaInfo: {
     title: "Лекция | СДО PRO",
+  },
+  methods: {
+    printLection() {
+      this.$print(this.$refs.lection)
+    }
   },
   computed: {
     lection() {

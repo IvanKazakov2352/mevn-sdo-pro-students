@@ -46,6 +46,14 @@ const routes = [
     },
   },
   {
+    path: "/profile/:id/examen/:examenID",
+    name: "examen",
+    component: () => import("@/components/TestsExamen.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/profile/:id/category/:categoryID",
     name: "categoryItem",
     component: () => import("@/components/CategoryItem.vue"),
@@ -94,9 +102,17 @@ const routes = [
     },
   },
   {
-    path: "/result",
+    path: "/test_result",
     name: "result",
     component: () => import("@/components/TestResult.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/examen_result",
+    name: "examen",
+    component: () => import("@/components/ExamenResult.vue"),
     meta: {
       requiresAuth: true,
     },

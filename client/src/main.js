@@ -7,8 +7,10 @@ import vuetify from "./plugins/vuetify";
 import * as VueGoogleMaps from "vue2-google-maps";
 import UUID from "vue-uuid";
 import VueMeta from 'vue-meta'
+import Print from 'vue-print-plugin'
 
 Vue.use(UUID);
+Vue.use(Print)
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })

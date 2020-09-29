@@ -15,7 +15,7 @@ h3 {
 .sheet {
   max-width: 1400px;
   min-height: 1000px;
-  max-height: 6000px;
+  max-height: 50000px;
   background-color: white;
   border-radius: 10px;
 }

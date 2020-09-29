@@ -2,7 +2,7 @@
   <v-row class="fill-height">
     <v-col>
       <v-toolbar class="mb-2" color="indigo darken-5" dark flat>
-        <v-toolbar-title>{{ testing.nameTest }}</v-toolbar-title>
+        <v-toolbar-title>{{ testing.nameExamen }}</v-toolbar-title>
       </v-toolbar>
       <v-card class="fill-height" height="auto">
         <v-col cols="12">
@@ -67,7 +67,7 @@
                 class="ma-2"
                 outlined
                 color="indigo"
-                >Закончить тестирование</v-btn
+                >Закончить попытку</v-btn
               >
             </v-row>
           </v-card>
@@ -80,7 +80,7 @@
 import axios from "axios";
 export default {
   metaInfo: {
-    title: "Тестирование | СДО PRO",
+    title: "Экзаменационный тест | СДО PRO",
   },
   data() {
     return {
@@ -88,6 +88,9 @@ export default {
       checkedQuestions: false,
       finalOtvets: [],
       questions: [],
+      userAttempts: [],
+      user: {},
+      attemp: 0,
       page: 1,
       perPage: 1,
       plus: 0,
@@ -110,13 +113,15 @@ export default {
     },
     test(question) {
       this.next(+1, question);
-      this.$store.commit("setTestResult", {
+      this.attemp++;
+      this.$store.commit("setExamenResult", {
         id: this.$uuid.v4(),
         percent: this.testPercent,
         testQues: this.testing.questions,
-        nameTest: this.testing.nameTest,
+        nameTest: this.testing.nameExamen,
+        attemp: this.attemp,
       });
-      this.$router.push("/test_result");
+      this.$router.push("/examen_result");
     },
   },
   computed: {
@@ -124,14 +129,11 @@ export default {
       return Math.ceil(this.testing.questions.length / this.perPage);
     },
     testing() {
-      return this.$store.getters.test(
-        this.$route.params.categoryID,
-        this.$route.params.subcategoryID,
-        this.$route.params.moduleID,
-        this.$route.params.lectionID,
-        this.$route.params.testID
-      );
+      return this.$store.getters.testExamen(this.$route.params.examenID);
     },
+  },
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem("listenerProfile"));
   },
 };
 </script>

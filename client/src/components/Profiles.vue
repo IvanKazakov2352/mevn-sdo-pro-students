@@ -23,10 +23,6 @@
             <div class="text--primary">
               Дата экзамена: {{ group.dateexamen }}
             </div>
-            <div class="text--primary">
-              Доступ группы до сдачи экзамена:
-              {{ !group.dostup ? "заблокирован" : "разрешен" }}
-            </div>
           </v-card-text>
           <v-card-actions>
             <router-link tag="button" :to="{name: 'profileItem', params: {id: profile._id}}">

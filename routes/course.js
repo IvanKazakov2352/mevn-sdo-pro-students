@@ -40,6 +40,7 @@ router.put("/:id", (req, res, next) => {
       course.dostupOnTests = req.body.dostupOnTests,
       course.dostupOnLections = req.body.dostupOnLections,
       course.categories = req.body.categories
+      course.examens = req.body.examens
       course.save()
         .then((course) => {
           res.json("Update completed");

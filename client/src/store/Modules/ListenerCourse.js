@@ -4,7 +4,8 @@ export default {
   state: {
     groups: [],
     profile: {},
-    result: {}
+    testResult: {},
+    examenResult: {}
   },
   mutations: {
     setGroups(state, data) {
@@ -13,8 +14,11 @@ export default {
     setProfile(state, data) {
       state.profile = data
     },
-    setResult(state, payload) {
-      state.result = payload
+    setTestResult(state, payload) {
+      state.testResult = payload
+    },
+    setExamenResult(state, payload) {
+      state.examenResult = payload
     }
   },
   actions: {
@@ -26,6 +30,10 @@ export default {
       const { data } = await axios.get("/api/course/" + payload);
       commit("setProfile", data)
     },
+    async updateProfile({ commit, state }, payload) {
+      const { data } = await axios.put("/api/course/" + payload, {...state.profile});
+      commit("setProfile", data)
+    }
   },
   getters: {
     groupsCount(state) {
@@ -38,7 +46,13 @@ export default {
       return state.profile
     },
     result(state) {
-      return state.result
+      return state.testResult
+    },
+    resultExamen(state) {
+      return state.examenResult
+    },
+    testExamen: (state) => (examenID) => {
+      return state.profile.examens.find(examen => examen.id === examenID)
     },
     category: (state) => (categoryID) => {
       return state.profile.categories.find(cat => cat.id === categoryID)
