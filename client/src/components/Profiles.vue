@@ -25,7 +25,7 @@
             </div>
           </v-card-text>
           <v-card-actions>
-            <router-link tag="button" :to="{name: 'profileItem', params: {id: profile._id}}">
+            <router-link tag="button" :to="{name: 'profileItem', params: {id: profile._id}, query: {group_id: group._id}}">
               <v-btn text color="deep-purple accent-4">
                 Начать обучение
               </v-btn>

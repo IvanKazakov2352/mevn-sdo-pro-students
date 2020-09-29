@@ -4,12 +4,17 @@ export default {
   state: {
     groups: [],
     profile: {},
+    group: {},
     testResult: {},
-    examenResult: {}
+    examenResult: {},
+    attemptExamen: 0
   },
   mutations: {
     setGroups(state, data) {
       state.groups = data;
+    },
+    setGroup(state, data) {
+      state.group = data
     },
     setProfile(state, data) {
       state.profile = data
@@ -19,12 +24,19 @@ export default {
     },
     setExamenResult(state, payload) {
       state.examenResult = payload
+    },
+    setAttemptExamen(state) {
+      state.attemptExamen++
     }
   },
   actions: {
     async fetchGroups({ commit }) {
       const { data } = await axios.get("/api/groups/");
       commit("setGroups", data);
+    },
+    async fetchGroup({commit}, payload) {
+      const { data } = await axios.get("/api/groups/" + payload);
+      commit("setGroup", data)
     },
     async fetchProfile({ commit }, payload) {
       const { data } = await axios.get("/api/course/" + payload);
@@ -42,6 +54,9 @@ export default {
     groups(state) {
       return state.groups;
     },
+    group(state) {
+      return state.group
+    },
     profile(state) {
       return state.profile
     },
@@ -50,6 +65,9 @@ export default {
     },
     resultExamen(state) {
       return state.examenResult
+    },
+    attemptUserExamen(state) {
+      return state.attemptExamen
     },
     testExamen: (state) => (examenID) => {
       return state.profile.examens.find(examen => examen.id === examenID)

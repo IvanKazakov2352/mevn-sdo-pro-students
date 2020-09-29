@@ -3,7 +3,8 @@
     <v-col>
       <v-toolbar class="mb-2" color="indigo darken-5" dark flat>
         <v-toolbar-title>
-          Результат прохождения экзаменационного тестирования: {{ resultExamen.nameTest }} - {{ resultExamen.percent }}%
+          Результат прохождения экзаменационного тестирования:
+          {{ resultExamen.nameTest }} - {{ resultExamen.percent }}%. Оценка за тестирование: {{ resultExamen.appraisal }}
         </v-toolbar-title>
       </v-toolbar>
       <div class="flex">
@@ -37,6 +38,9 @@ export default {
   metaInfo: {
     title: "Результат прохождения тестирования | СДО PRO",
   },
+  data: () => ({
+    appraisal: 0,
+  }),
   computed: {
     ...mapGetters(["resultExamen"]),
   },

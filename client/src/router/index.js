@@ -40,6 +40,7 @@ const routes = [
   {
     path: "/profile/:id",
     name: "profileItem",
+    props: true,
     component: () => import("@/components/ProfileItem.vue"),
     meta: {
       requiresAuth: true,
@@ -102,7 +103,7 @@ const routes = [
     },
   },
   {
-    path: "/test_result",
+    path: "/testResult",
     name: "result",
     component: () => import("@/components/TestResult.vue"),
     meta: {
@@ -110,8 +111,8 @@ const routes = [
     },
   },
   {
-    path: "/examen_result",
-    name: "examen",
+    path: "/examenResult",
+    name: "examenResult",
     component: () => import("@/components/ExamenResult.vue"),
     meta: {
       requiresAuth: true,

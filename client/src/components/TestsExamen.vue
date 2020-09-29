@@ -95,6 +95,7 @@ export default {
       perPage: 1,
       plus: 0,
       testPercent: 0,
+      appraisal: 0,
     };
   },
   methods: {
@@ -113,15 +114,24 @@ export default {
     },
     test(question) {
       this.next(+1, question);
-      this.attemp++;
-      this.$store.commit("setExamenResult", {
+      this.testPercent < this.testing.appraisal3 ? this.appraisal = 2 : 0
+      this.testPercent >= this.testing.appraisal3 ? this.appraisal = 3 : 0
+      this.testPercent < this.testing.appraisal4 ? this.appraisal = 3 : 0
+      this.testPercent >= this.testing.appraisal4 ? this.appraisal = 4 : 0
+      this.testPercent <= this.testing.appraisal5 ? this.appraisal = 4 : 0
+      this.testPercent >= this.testing.appraisal5 ? this.appraisal = 5 : 0
+      const listener = {
         id: this.$uuid.v4(),
+        userName: this.user.fiolistener,
         percent: this.testPercent,
         testQues: this.testing.questions,
         nameTest: this.testing.nameExamen,
-        attemp: this.attemp,
-      });
-      this.$router.push("/examen_result");
+        appraisal: this.appraisal,
+      };
+      this.$store.commit("setExamenResult", listener);
+      this.testing.listeners.push(listener);
+      this.$store.dispatch("updateProfile", this.$route.params.id);
+      this.$router.push("/examenResult");
     },
   },
   computed: {

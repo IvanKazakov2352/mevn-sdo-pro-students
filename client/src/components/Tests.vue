@@ -116,7 +116,7 @@ export default {
         testQues: this.testing.questions,
         nameTest: this.testing.nameTest,
       });
-      this.$router.push("/test_result");
+      this.$router.push("/testResult");
     },
   },
   computed: {

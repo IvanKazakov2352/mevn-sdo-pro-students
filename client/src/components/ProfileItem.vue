@@ -45,9 +45,9 @@
         </v-row>
       </v-card>
       <v-card class="mt-5" width="auto" height="auto">
-        <v-card-text class="headline"
-          >Список экзаменационных тестов</v-card-text
-        >
+        <v-card-text class="headline">
+          Список экзаменационных тестов
+        </v-card-text>
         <v-row>
           <v-card
             class="mt-5 mb-5 mr-5 ml-5"
@@ -62,13 +62,17 @@
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   {{
-                    examen.dostupExamen
+                    group.dostupExamen
                       ? "Тестирование доступно для прохождения"
                       : "Тестирование недоступно для прохождения"
                   }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
-                  Количество попыток сдачи экзамена: {{ examen.countExam }}
+                  Количество попыток сдачи экзамена: {{ group.attemptExamen }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  Количество ваших попыток сдачи экзамена:
+                  {{ attemptUserExamen }}
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -76,23 +80,29 @@
             <v-card-actions>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                  <router-link
-                    tag="button"
-                    :to="{ name: 'examen', params: { examenID: examen.id } }"
+                  <v-btn
+                    icon
+                    v-bind="attrs"
+                    v-on="on"
+                    :disabled="!group.dostupExamen"
+                    @click="redirectToExamenTests(examen)"
                   >
-                    <v-btn
-                      icon
-                      v-bind="attrs"
-                      v-on="on"
-                      :disabled="!examen.dostupExamen"
-                    >
-                      <v-icon>
-                        mdi-apple-keyboard-command
-                      </v-icon>
-                    </v-btn>
-                  </router-link>
+                    <v-icon>
+                      mdi-apple-keyboard-command
+                    </v-icon>
+                  </v-btn>
                 </template>
                 <span>Тестирование доступно для прохождения</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon>
+                      mdi-information-outline
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Дополнительная информация о экзамене</span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -109,14 +119,18 @@ export default {
   },
   data: () => ({
     user: {},
-    examen: {},
-    dostupUser: {},
   }),
+  methods: {
+    redirectToExamenTests(examen) {
+      this.$router.push({ name: "examen", params: { examenID: examen.id } });
+    },
+  },
   computed: {
-    ...mapGetters(["profile"]),
+    ...mapGetters(["profile", "group", "attemptUserExamen"]),
   },
   mounted() {
     this.$store.dispatch("fetchProfile", this.$route.params.id);
+    this.$store.dispatch("fetchGroup", this.$route.query.group_id);
     this.user = JSON.parse(localStorage.getItem("listenerProfile"));
   },
 };
